@@ -1,0 +1,10 @@
+{
+  "v": 1,
+  "discord": "conectado",
+  "canal": { "nombre": "<b>Sala</b>", "total": 2 },
+  "yo": { "silenciado": false, "ensordecido": true },
+  "miembros": [
+    { "clave": "0000000a", "nombre": "Tú", "habla": false, "silenciado": false, "ensordecido": true },
+    { "clave": "0000000f", "nombre": "<img src=x onerror=alert(1)>", "habla": true, "silenciado": false, "ensordecido": false }
+  ]
+}

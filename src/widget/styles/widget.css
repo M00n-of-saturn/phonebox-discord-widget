@@ -1,0 +1,194 @@
+/* Panel de voz a pantalla completa en horizontal. Medidas en vh/vw para escalar con el widget. */
+:root {
+  --texto: #eef2f6;
+  --tenue: rgba(238, 242, 246, 0.62);
+  --fondo-boton: rgba(255, 255, 255, 0.09);
+  --fondo-avatar: #3a3f4b;
+  --verde: #23a55a;
+  --rojo: #f23f43;
+  --acento: #5865f2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  height: 100vh;
+  padding: 4vh 3vw;
+  color: var(--texto);
+}
+
+/* Cabecera */
+.cabecera {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vw;
+  height: 12vh;
+  min-width: 0;
+  font-size: 7vh;
+}
+
+.cabecera .canal {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cabecera .canal::before {
+  content: '🔊\00a0';
+}
+
+.cabecera .total {
+  flex: none;
+  color: var(--tenue);
+  font-size: 5.5vh;
+}
+
+.panel:has(.aviso) .cabecera {
+  flex: 1;
+  justify-content: center;
+  height: auto;
+  color: var(--tenue);
+  font-size: 8vh;
+  text-align: center;
+}
+
+.panel:has(.aviso) .miembros {
+  display: none;
+}
+
+/* Participantes: hasta 12, en 4 columnas */
+.miembros {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 15vh;
+  align-content: start;
+  gap: 2vh 2vw;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.miembro {
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+  min-width: 0;
+  font-size: 5.5vh;
+}
+
+.inicial {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 11vh;
+  height: 11vh;
+  border-radius: 50%;
+  background: var(--fondo-avatar);
+  font-size: 5vh;
+  font-weight: 600;
+  transition: box-shadow 0.12s ease-out;
+}
+
+.miembro.habla .inicial {
+  box-shadow: 0 0 0 0.8vh var(--verde);
+}
+
+.miembro.habla .nombre {
+  color: #fff;
+}
+
+.nombre {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.indicador {
+  flex: none;
+  font-size: 4.5vh;
+}
+
+.indicador-silencio::before {
+  content: '🔇';
+}
+
+.indicador-ensordecido::before {
+  content: '🎧';
+}
+
+/* Botones: objetivos táctiles grandes */
+.controles {
+  display: flex;
+  flex: none;
+  gap: 2vw;
+  height: 24vh;
+}
+
+.controles:empty {
+  display: none;
+}
+
+.boton {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5vw;
+  min-height: 20vh;
+  border: 0;
+  border-radius: 3vh;
+  background: var(--fondo-boton);
+  color: var(--texto);
+  font: inherit;
+  font-size: 6vh;
+  font-weight: 600;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.12s, transform 0.08s;
+}
+
+.boton:active {
+  transform: scale(0.97);
+}
+
+.boton.activo {
+  background: var(--rojo);
+}
+
+.silenciar::before {
+  content: '🎙';
+}
+
+.ensordecer::before {
+  content: '🎧';
+}
+
+.colgar {
+  background: rgba(242, 63, 67, 0.28);
+}
+
+.colgar::before {
+  content: '📞';
+}
+
+.abrir {
+  background: var(--acento);
+}

@@ -1,0 +1,20 @@
+{
+  "v": 1,
+  "discord": "conectado",
+  "canal": { "nombre": "Sala con un nombre muy largo xxx", "total": 15 },
+  "yo": { "silenciado": true, "ensordecido": false },
+  "miembros": [
+    { "clave": "00000001", "nombre": "Tú", "habla": false, "silenciado": true, "ensordecido": false },
+    { "clave": "00000002", "nombre": "Ana", "habla": true, "silenciado": false, "ensordecido": false },
+    { "clave": "00000003", "nombre": "Bruno", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "00000004", "nombre": "Carla con un nombre de 32 letras", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "00000005", "nombre": "Diego", "habla": true, "silenciado": false, "ensordecido": false },
+    { "clave": "00000006", "nombre": "Persona 6", "habla": false, "silenciado": true, "ensordecido": false },
+    { "clave": "00000007", "nombre": "Persona 7", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "00000008", "nombre": "Persona 8", "habla": false, "silenciado": false, "ensordecido": true },
+    { "clave": "00000009", "nombre": "Persona 9", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "0000000a", "nombre": "Persona 10", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "0000000b", "nombre": "?", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "0000000c", "nombre": "😀 Emoji", "habla": false, "silenciado": false, "ensordecido": false }
+  ]
+}

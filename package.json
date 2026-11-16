@@ -1,0 +1,25 @@
+{
+  "name": "phonebox-discord-widget",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Discord voice panel for PhoneBox: see who is talking and mute, deafen or hang up from your desk phone",
+  "license": "MIT",
+  "keywords": ["phonebox", "discord", "voice", "widget", "desk-panel"],
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.ts\"",
+    "typecheck": "tsc",
+    "build": "node scripts/build.mjs",
+    "setup": "node dist/setup.js",
+    "install-widget": "node scripts/install.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

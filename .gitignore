@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.env.*
+
+# Notas locales de trabajo: contienen rutas y datos de la máquina, no se publican.
+CLAUDE.md
+docs/ESTADO.md
+

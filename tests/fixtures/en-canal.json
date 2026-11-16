@@ -1,0 +1,13 @@
+{
+  "v": 1,
+  "discord": "conectado",
+  "canal": { "nombre": "General", "total": 5 },
+  "yo": { "silenciado": false, "ensordecido": false },
+  "miembros": [
+    { "clave": "0000000a", "nombre": "Tú", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "0000000b", "nombre": "Ana", "habla": true, "silenciado": false, "ensordecido": false },
+    { "clave": "0000000c", "nombre": "Bruno", "habla": false, "silenciado": true, "ensordecido": false },
+    { "clave": "0000000d", "nombre": "Carla", "habla": false, "silenciado": false, "ensordecido": false },
+    { "clave": "0000000e", "nombre": "Diego", "habla": false, "silenciado": true, "ensordecido": true }
+  ]
+}
