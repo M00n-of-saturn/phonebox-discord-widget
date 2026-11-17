@@ -133,7 +133,7 @@ function setup(t: TestContext, opts: { token?: string | null } = {}) {
         return token;
       },
     },
-    tracker: new VoiceStateTracker('sal-de-prueba'),
+    tracker: new VoiceStateTracker('sal-de-prueba', 'Tú'),
     retryMs: 5000,
     log: (message) => logs.push(message),
   });

@@ -1,9 +1,8 @@
 // Traduce los datos crudos que manda Discord a un VoiceState validado. Clase pura: sin entrada ni salida.
 
 import { createHash } from 'node:crypto';
+import { STRINGS } from '../../shared/i18n.ts';
 import { MAX_MEMBERS, sanitizeName, type DiscordStatus, type Member, type VoiceState } from '../../shared/models/VoiceState.ts';
-
-const SELF_NAME = 'Tú';
 
 interface TrackedMember {
   id: string;
@@ -51,9 +50,11 @@ export class VoiceStateTracker {
   /** En el orden en que llegaron; el propio usuario se reordena al tomar la instantánea. */
   #members: TrackedMember[] = [];
   #speaking = new Set<string>();
+  readonly #selfName: string;
 
-  constructor(salt: string) {
+  constructor(salt: string, selfName: string = STRINGS.en.you) {
     this.#salt = salt;
+    this.#selfName = selfName;
   }
 
   setStatus(status: DiscordStatus): void {
@@ -139,7 +140,7 @@ export class VoiceStateTracker {
     const others = this.#members.filter((m) => m.id !== this.#selfId);
     const miembros: Member[] = [...own, ...others].slice(0, MAX_MEMBERS).map((m) => ({
       clave: this.#keyFor(m.id),
-      nombre: m.id === this.#selfId ? SELF_NAME : m.nombre,
+      nombre: m.id === this.#selfId ? this.#selfName : m.nombre,
       habla: this.#speaking.has(m.id),
       silenciado: m.silenciado,
       ensordecido: m.ensordecido,

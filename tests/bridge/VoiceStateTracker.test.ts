@@ -34,7 +34,7 @@ function snap(tracker: VoiceStateTracker): VoiceState {
 }
 
 function connectedTracker(salt = 'sal-de-prueba'): VoiceStateTracker {
-  const tracker = new VoiceStateTracker(salt);
+  const tracker = new VoiceStateTracker(salt, 'Tú');
   tracker.setStatus('conectado');
   tracker.setSelfId(SELF_ID);
   return tracker;
@@ -47,7 +47,7 @@ const TRES = [
 ];
 
 test('estado inicial', () => {
-  assert.deepEqual(snap(new VoiceStateTracker('sal')), {
+  assert.deepEqual(snap(new VoiceStateTracker('sal', 'Tú')), {
     v: 1,
     discord: 'cerrado',
     canal: null,
@@ -267,4 +267,12 @@ test('datos inválidos devuelven false y no cambian el estado', () => {
 
   assert.deepEqual(snap(tracker), before);
   assert.equal(tracker.channelId, '500');
+});
+
+test('el nombre propio por defecto es You', () => {
+  const tracker = new VoiceStateTracker('sal');
+  tracker.setStatus('conectado');
+  tracker.setSelfId(SELF_ID);
+  tracker.setChannel(rawChannel('500', 'General', [...TRES, rawState(SELF_ID, 'mi_usuario')]));
+  assert.equal(snap(tracker).miembros[0]?.nombre, 'You');
 });

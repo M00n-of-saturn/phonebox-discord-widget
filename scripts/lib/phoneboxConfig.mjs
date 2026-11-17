@@ -89,3 +89,48 @@ export function removeWidget(config) {
   }
   return next;
 }
+
+// Idiomas del panel. Los scripts no importan de src/, así que tienen su propia lista.
+const LANGS = ['en', 'es'];
+const LANG_MARK = 'data-lang="en"';
+
+/** Fija el idioma en el HTML del widget; exige que la marca por defecto aparezca exactamente una vez. */
+export function setWidgetLang(html, lang) {
+  if (!LANGS.includes(lang)) throw new Error(`idioma no válido: ${lang}`);
+  if (html.split(LANG_MARK).length !== 2) throw new Error(`el HTML del widget debe contener ${LANG_MARK} exactamente una vez`);
+  return html.replace(LANG_MARK, `data-lang="${lang}"`);
+}
+
+/**
+ * Idioma con el que quedó instalado el servicio (argumento --lang de ExecStart).
+ * Sin unidad (null): null, primera instalación. Unidad con --lang en|es: ese idioma.
+ * Unidad sin --lang: instalación anterior a esta opción, todas eran en español, así que 'es'.
+ * Un valor no válido (--lang fr) da null.
+ */
+export function langFromUnit(unitText) {
+  if (typeof unitText !== 'string') return null;
+  const line = unitText.split('\n').find((l) => l.startsWith('ExecStart='));
+  const match = line?.match(/(?:^|\s)--lang(?:=|\s+)(\S+)/);
+  if (!match) return 'es';
+  return LANGS.includes(match[1]) ? match[1] : null;
+}
+
+/** Interpreta los argumentos del instalador. Sin --lang conserva el idioma actual (o en). Lanza Error si algo no vale. */
+export function parseInstallArgs(args, current) {
+  let uninstall = false;
+  let lang = null;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === '--uninstall') {
+      uninstall = true;
+      continue;
+    }
+    if (arg !== '--lang' && !arg.startsWith('--lang=')) throw new Error(`opción desconocida: ${arg}`);
+    if (lang !== null) throw new Error('--lang se indicó más de una vez');
+    const value = arg === '--lang' ? args[++i] : arg.slice('--lang='.length);
+    if (!LANGS.includes(value)) throw new Error('--lang debe ser en o es');
+    lang = value;
+  }
+  if (uninstall && lang !== null) throw new Error('--lang no se combina con --uninstall');
+  return uninstall ? { uninstall: true } : { uninstall: false, lang: lang ?? current ?? 'en' };
+}

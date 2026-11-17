@@ -30,7 +30,7 @@
 <p align="center">
   <img src="docs/images/hero.png" width="860" alt="El panel de voz en un teléfono: nombre del canal, cinco personas, una hablando, y los botones de silenciar, ensordecer y colgar">
 </p>
-<p align="center"><sub>Funcionando en PhoneBox en un teléfono Android, con datos de demostración.</sub></p>
+<p align="center"><sub>Funcionando en PhoneBox en un teléfono Android, con datos de demostración. La interfaz puede estar en inglés o en español, a elección al instalar.</sub></p>
 
 ## Qué ofrece
 
@@ -70,13 +70,24 @@ pnpm run setup            # pide el Client ID y el Client Secret (oculto) y abre
 pnpm run install-widget   # agrega la página "Discord" y 4 accesos directos a PhoneBox y activa el servicio
 ```
 
+La interfaz queda en inglés por defecto. Para tenerla en español, instala con `--lang es`:
+
+```sh
+pnpm run install-widget --lang es   # interfaz en español (--lang en para inglés)
+```
+
+Solo se aceptan `en` y `es` (también funciona `--lang=es`). `--lang` no se puede combinar con `--uninstall`.
+
 > [!NOTE]
 > Usa `pnpm run setup`, no `pnpm setup`: este último es un comando propio de pnpm.
 > Ejecútalo en una terminal real, porque lee el secreto sin mostrarlo.
 
 `install-widget` guarda antes una copia de la configuración de PhoneBox en `~/.config/PhoneBox/config.json.pre-discord.bak`.
 Para actualizar tras traer cambios: `pnpm build && pnpm run install-widget`.
-Si el widget muestra "Falta autorizar", vuelve a ejecutar `pnpm run setup` (Enter mantiene lo guardado).
+Reinstalar sin `--lang` mantiene el idioma de la instalación actual (se lee de la unidad de systemd del bridge).
+Las instalaciones hechas antes de esta opción eran todas en español, así que siguen en español al reinstalar
+(usa `--lang en` para cambiar).
+Si el widget muestra "Falta autorizar" (o "Authorization missing" si lo instalaste en inglés), vuelve a ejecutar `pnpm run setup` (Enter mantiene lo guardado).
 
 ## Pantallas
 
