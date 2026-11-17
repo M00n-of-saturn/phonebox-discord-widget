@@ -126,9 +126,10 @@ test('langFromUnit lee --lang de la línea ExecStart', () => {
   assert.equal(langFromUnit(unit('/usr/bin/node /x/dist/bridge.js --lang es')), 'es');
   assert.equal(langFromUnit(unit('/usr/bin/node /x/dist/bridge.js --lang=en')), 'en');
   assert.equal(langFromUnit(null), null);
-  assert.equal(langFromUnit(unit('/usr/bin/node /x/dist/bridge.js')), null);
+  // Unidad sin --lang: instalación anterior a esta opción, todas eran en español.
+  assert.equal(langFromUnit(unit('/usr/bin/node /x/dist/bridge.js')), 'es');
   assert.equal(langFromUnit(unit('/usr/bin/node /x/dist/bridge.js --lang fr')), null);
-  assert.equal(langFromUnit('[Unit]\nDescription=usa --lang es\n[Service]\nExecStart=/usr/bin/node /x\n'), null);
+  assert.equal(langFromUnit('[Unit]\nDescription=usa --lang es\n[Service]\nExecStart=/usr/bin/node /x\n'), 'es');
 });
 
 test('parseInstallArgs elige el idioma o conserva el actual', () => {

@@ -85,8 +85,8 @@ Only `en` and `es` are accepted (`--lang=es` also works). `--lang` cannot be com
 `install-widget` first saves a copy of your PhoneBox settings to `~/.config/PhoneBox/config.json.pre-discord.bak`.
 To update after pulling changes: `pnpm build && pnpm run install-widget`.
 A reinstall without `--lang` keeps the language of the current installation (read from the bridge's systemd unit).
-Installations made before this option existed have no language recorded, so they switch to English on the next
-reinstall unless you pass `--lang es` once.
+Installations made before this option existed were all in Spanish, so they keep Spanish on reinstall
+(use `--lang en` to switch).
 
 ## Screens
 

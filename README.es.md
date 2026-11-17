@@ -85,9 +85,9 @@ Solo se aceptan `en` y `es` (también funciona `--lang=es`). `--lang` no se pued
 `install-widget` guarda antes una copia de la configuración de PhoneBox en `~/.config/PhoneBox/config.json.pre-discord.bak`.
 Para actualizar tras traer cambios: `pnpm build && pnpm run install-widget`.
 Reinstalar sin `--lang` mantiene el idioma de la instalación actual (se lee de la unidad de systemd del bridge).
-Las instalaciones hechas antes de esta opción no tienen idioma registrado, así que pasan a inglés en la próxima
-reinstalación, salvo que pases `--lang es` una vez.
-Si el widget muestra "Falta autorizar", vuelve a ejecutar `pnpm run setup` (Enter mantiene lo guardado).
+Las instalaciones hechas antes de esta opción eran todas en español, así que siguen en español al reinstalar
+(usa `--lang en` para cambiar).
+Si el widget muestra "Falta autorizar" (o "Authorization missing" si lo instalaste en inglés), vuelve a ejecutar `pnpm run setup` (Enter mantiene lo guardado).
 
 ## Pantallas
 

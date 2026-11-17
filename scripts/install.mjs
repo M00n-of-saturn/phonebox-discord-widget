@@ -107,7 +107,8 @@ let options;
 try {
   const unitText = existsSync(unitPath) ? readFileSync(unitPath, 'utf8') : null;
   options = parseInstallArgs(process.argv.slice(2), langFromUnit(unitText));
-} catch {
+} catch (error) {
+  say(error instanceof Error ? error.message : String(error));
   say('Uso: pnpm run install-widget [--lang en|es] [--uninstall]');
   process.exit(1);
 }

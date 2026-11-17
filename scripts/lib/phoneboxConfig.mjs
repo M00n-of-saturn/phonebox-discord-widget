@@ -101,12 +101,18 @@ export function setWidgetLang(html, lang) {
   return html.replace(LANG_MARK, `data-lang="${lang}"`);
 }
 
-/** Idioma con el que quedó instalado el servicio (argumento --lang de ExecStart), o null si no se puede saber. */
+/**
+ * Idioma con el que quedó instalado el servicio (argumento --lang de ExecStart).
+ * Sin unidad (null): null, primera instalación. Unidad con --lang en|es: ese idioma.
+ * Unidad sin --lang: instalación anterior a esta opción, todas eran en español, así que 'es'.
+ * Un valor no válido (--lang fr) da null.
+ */
 export function langFromUnit(unitText) {
   if (typeof unitText !== 'string') return null;
   const line = unitText.split('\n').find((l) => l.startsWith('ExecStart='));
   const match = line?.match(/(?:^|\s)--lang(?:=|\s+)(\S+)/);
-  return match && LANGS.includes(match[1]) ? match[1] : null;
+  if (!match) return 'es';
+  return LANGS.includes(match[1]) ? match[1] : null;
 }
 
 /** Interpreta los argumentos del instalador. Sin --lang conserva el idioma actual (o en). Lanza Error si algo no vale. */
