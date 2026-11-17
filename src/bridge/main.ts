@@ -7,6 +7,7 @@ import { KeyringSecretStore, KeyringUnavailableError } from './auth/SecretStore.
 import { TokenService } from './auth/TokenService.ts';
 import { ConfigError, configPath, loadConfig, type BridgeConfig } from './config/BridgeConfig.ts';
 import { AlreadyRunningError, ControlServer, controlSocketPath } from './control/ControlServer.ts';
+import { STRINGS, langFromArgs } from '../shared/i18n.ts';
 import { RpcClient, findDiscordSocket } from './discord/RpcClient.ts';
 import { PhoneBoxPublisher } from './publishers/PhoneBoxPublisher.ts';
 import { DiscordVoiceSource } from './sources/DiscordVoiceSource.ts';
@@ -37,7 +38,7 @@ async function main(): Promise<void> {
   const store = new KeyringSecretStore();
   const config = await loadSettings(store);
   const tokens = new TokenService({ clientId: config.clientId, redirectUri: config.redirectUri, store, fetchFn: fetch });
-  const tracker = new VoiceStateTracker(randomBytes(16).toString('hex'));
+  const tracker = new VoiceStateTracker(randomBytes(16).toString('hex'), STRINGS[langFromArgs(process.argv.slice(2))].you);
   const source = new DiscordVoiceSource({
     createRpc: () => {
       const socketPath = findDiscordSocket(process.env, existsSync);
