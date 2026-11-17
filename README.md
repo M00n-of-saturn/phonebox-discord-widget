@@ -28,9 +28,9 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/hero.png" width="860" alt="The voice panel on a phone: channel name, five members, one speaking, and the mute, deafen and hang up buttons">
+  <img src="docs/images/en-hero.png" width="860" alt="The voice panel on a phone: channel name, five members, one speaking, and the mute, deafen and hang up buttons">
 </p>
-<p align="center"><sub>Running in PhoneBox on an Android phone, with demo data. The interface is in Spanish.</sub></p>
+<p align="center"><sub>Running in PhoneBox on an Android phone, with demo data. The interface is in English or Spanish, chosen at install time.</sub></p>
 
 ## What you get
 
@@ -70,23 +70,34 @@ pnpm run setup            # asks for the Client ID and the Client Secret (hidden
 pnpm run install-widget   # adds the "Discord" page and 4 shortcuts to PhoneBox and starts the service
 ```
 
+The interface is in English by default. For Spanish, install with `--lang es`:
+
+```sh
+pnpm run install-widget --lang es   # Spanish interface (--lang en for English)
+```
+
+Only `en` and `es` are accepted (`--lang=es` also works). `--lang` cannot be combined with `--uninstall`.
+
 > [!NOTE]
 > Use `pnpm run setup`, not `pnpm setup`: the latter is a built-in pnpm command.
 > Run it in a real terminal, since it reads the secret without echoing it.
 
 `install-widget` first saves a copy of your PhoneBox settings to `~/.config/PhoneBox/config.json.pre-discord.bak`.
 To update after pulling changes: `pnpm build && pnpm run install-widget`.
+A reinstall without `--lang` keeps the language of the current installation (read from the bridge's systemd unit).
+Installations made before this option existed have no language recorded, so they switch to English on the next
+reinstall unless you pass `--lang es` once.
 
 ## Screens
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/images/panel-full.png" alt="A full channel: 12 members shown, 15 in voice, mute active"><br><b>Busy channel</b><br><sub>12 people shown, the real total in the corner; long names are cut with an ellipsis.</sub></td>
-    <td width="50%"><img src="docs/images/panel-html-name.png" alt="A member whose name contains HTML, shown as plain text"><br><b>Untrusted names stay text</b><br><sub>A name like <code>&lt;img src=x onerror=…&gt;</code> is drawn literally, never as HTML.</sub></td>
+    <td width="50%"><img src="docs/images/en-panel-full.png" alt="A full channel: 12 members shown, 15 in voice, mute active"><br><b>Busy channel</b><br><sub>12 people shown, the real total in the corner; long names are cut with an ellipsis.</sub></td>
+    <td width="50%"><img src="docs/images/en-panel-html-name.png" alt="A member whose name contains HTML, shown as plain text"><br><b>Untrusted names stay text</b><br><sub>A name like <code>&lt;img src=x onerror=…&gt;</code> is drawn literally, never as HTML.</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/images/panel-not-in-channel.png" alt="Not in a voice channel, with mute and deafen still available"><br><b>Not in a channel</b><br><sub>Mute and deafen still work before you join.</sub></td>
-    <td width="50%"><img src="docs/images/panel-closed.png" alt="Discord is closed, with an Open Discord button"><br><b>Discord closed</b><br><sub>One button to open it on the PC.</sub></td>
+    <td width="50%"><img src="docs/images/en-panel-not-in-channel.png" alt="Not in a voice channel, with mute and deafen still available"><br><b>Not in a channel</b><br><sub>Mute and deafen still work before you join.</sub></td>
+    <td width="50%"><img src="docs/images/en-panel-closed.png" alt="Discord is closed, with an Open Discord button"><br><b>Discord closed</b><br><sub>One button to open it on the PC.</sub></td>
   </tr>
 </table>
 
