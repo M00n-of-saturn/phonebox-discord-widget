@@ -1,5 +1,6 @@
 // Instala el widget: agrega la página y los accesos directos en PhoneBox y deja el bridge como servicio de usuario.
 // Uso: pnpm run install-widget            (instala o actualiza)
+//      pnpm run install-widget --lang es   (idioma del panel: en por defecto; al reinstalar se conserva el actual)
 //      pnpm run install-widget --uninstall (revierte; la copia de la configuración se conserva)
 
 import { execFileSync } from 'node:child_process';
@@ -7,7 +8,7 @@ import { constants, copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, w
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applyWidget, removeWidget } from './lib/phoneboxConfig.mjs';
+import { applyWidget, langFromUnit, parseInstallArgs, removeWidget, setWidgetLang } from './lib/phoneboxConfig.mjs';
 
 const AGENT = 'http://127.0.0.1:8765';
 const SERVICE = 'phonebox-discord-widget.service';
@@ -43,14 +44,14 @@ async function writeSettings(settings, version) {
   if (!response.ok) throw new Error(`el agente de PhoneBox rechazó la configuración (HTTP ${response.status})`);
 }
 
-function unitFile() {
+function unitFile(lang) {
   return [
     '[Unit]',
     'Description=Panel de voz de Discord para PhoneBox (bridge)',
     'After=graphical-session.target',
     '',
     '[Service]',
-    `ExecStart=${process.execPath} ${join(root, 'dist', 'bridge.js')}`,
+    `ExecStart=${process.execPath} ${join(root, 'dist', 'bridge.js')} --lang ${lang}`,
     'Restart=on-failure',
     'RestartSec=5',
     'NoNewPrivileges=yes',
@@ -61,7 +62,7 @@ function unitFile() {
   ].join('\n');
 }
 
-async function install() {
+async function install(lang) {
   const html = join(root, 'dist', 'widget.html');
   for (const file of [html, join(root, 'dist', 'bridge.js'), join(root, 'dist', 'ctl.js')]) {
     if (!existsSync(file)) throw new Error(`falta ${file}; ejecuta "pnpm build" primero`);
@@ -74,17 +75,18 @@ async function install() {
   }
 
   const { settings, version } = await readSettings();
-  const next = applyWidget(settings, { html: readFileSync(html, 'utf8'), nodePath: process.execPath, ctlPath: join(root, 'dist', 'ctl.js') });
+  const next = applyWidget(settings, { html: setWidgetLang(readFileSync(html, 'utf8'), lang), nodePath: process.execPath, ctlPath: join(root, 'dist', 'ctl.js') });
   await writeSettings(next, version);
   say('PhoneBox: página "Discord" y accesos directos agregados.');
 
   mkdirSync(dirname(unitPath), { recursive: true });
-  writeFileSync(unitPath, unitFile());
+  writeFileSync(unitPath, unitFile(lang));
   systemctl('daemon-reload');
   systemctl('enable', SERVICE);
   // restart: si ya estaba en marcha, toma la versión recién construida.
   systemctl('restart', SERVICE);
   say(`Servicio ${SERVICE} activado.`);
+  say(`Idioma del panel: ${lang}`);
 }
 
 async function uninstall() {
@@ -100,14 +102,18 @@ async function uninstall() {
   if (existsSync(backup)) say(`La copia previa sigue en ${backup}.`);
 }
 
-const args = process.argv.slice(2);
-if (args.some((arg) => arg !== '--uninstall')) {
-  say('Uso: pnpm run install-widget [--uninstall]');
+// Se leen los argumentos antes de tocar PhoneBox o systemd; leer la unidad existente no modifica nada.
+let options;
+try {
+  const unitText = existsSync(unitPath) ? readFileSync(unitPath, 'utf8') : null;
+  options = parseInstallArgs(process.argv.slice(2), langFromUnit(unitText));
+} catch {
+  say('Uso: pnpm run install-widget [--lang en|es] [--uninstall]');
   process.exit(1);
 }
 
 try {
-  await (args.includes('--uninstall') ? uninstall() : install());
+  await (options.uninstall ? uninstall() : install(options.lang));
 } catch (error) {
   say(`No se pudo completar: ${error instanceof Error ? error.message : 'error desconocido'}`);
   process.exitCode = 1;
