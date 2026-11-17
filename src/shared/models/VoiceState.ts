@@ -1,4 +1,4 @@
-/** Estado de voz que el bridge publica y el widget dibuja. Ver docs/2026-11-15-diseno-panel-de-voz.md */
+/** Estado de voz que el bridge publica y el widget dibuja. Ver docs/2026-11-15-voice-panel-design.md */
 
 export const DISCORD_STATUSES = ['conectado', 'cerrado', 'sin-autorizar'] as const;
 export type DiscordStatus = (typeof DISCORD_STATUSES)[number];

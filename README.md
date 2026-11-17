@@ -15,7 +15,7 @@
 <p align="center">
   <a href="#quick-start"><b>Quick start</b></a> ·
   <a href="#how-it-works"><b>How it works</b></a> ·
-  <a href="docs/amenazas.md"><b>Threat model</b></a>
+  <a href="docs/threat-model.md"><b>Threat model</b></a>
 </p>
 
 <p align="center">
@@ -81,12 +81,12 @@ To update after pulling changes: `pnpm build && pnpm run install-widget`.
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/images/panel-lleno.png" alt="A full channel: 12 members shown, 15 in voice, mute active"><br><b>Busy channel</b><br><sub>12 people shown, the real total in the corner; long names are cut with an ellipsis.</sub></td>
-    <td width="50%"><img src="docs/images/panel-nombre-html.png" alt="A member whose name contains HTML, shown as plain text"><br><b>Untrusted names stay text</b><br><sub>A name like <code>&lt;img src=x onerror=…&gt;</code> is drawn literally, never as HTML.</sub></td>
+    <td width="50%"><img src="docs/images/panel-full.png" alt="A full channel: 12 members shown, 15 in voice, mute active"><br><b>Busy channel</b><br><sub>12 people shown, the real total in the corner; long names are cut with an ellipsis.</sub></td>
+    <td width="50%"><img src="docs/images/panel-html-name.png" alt="A member whose name contains HTML, shown as plain text"><br><b>Untrusted names stay text</b><br><sub>A name like <code>&lt;img src=x onerror=…&gt;</code> is drawn literally, never as HTML.</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/images/panel-fuera-de-canal.png" alt="Not in a voice channel, with mute and deafen still available"><br><b>Not in a channel</b><br><sub>Mute and deafen still work before you join.</sub></td>
-    <td width="50%"><img src="docs/images/panel-cerrado.png" alt="Discord is closed, with an Open Discord button"><br><b>Discord closed</b><br><sub>One button to open it on the PC.</sub></td>
+    <td width="50%"><img src="docs/images/panel-not-in-channel.png" alt="Not in a voice channel, with mute and deafen still available"><br><b>Not in a channel</b><br><sub>Mute and deafen still work before you join.</sub></td>
+    <td width="50%"><img src="docs/images/panel-closed.png" alt="Discord is closed, with an Open Discord button"><br><b>Discord closed</b><br><sub>One button to open it on the PC.</sub></td>
   </tr>
 </table>
 
@@ -118,7 +118,7 @@ flowchart LR
 | Other people's data | Only what is shown is sent. Real Discord ids are replaced by salted opaque keys that change on every start, with no avatars. |
 | Dependencies | Zero at runtime; three dev dependencies with a lockfile and `pnpm audit`. |
 
-The full threat matrix, with the test that backs each mitigation, is in [`docs/amenazas.md`](docs/amenazas.md).
+The full threat matrix, with the test that backs each mitigation, is in [`docs/threat-model.md`](docs/threat-model.md).
 
 ## Development
 
@@ -135,7 +135,7 @@ src/
   widget/          Runs on the phone: PhoneBox client, components and styles
 scripts/           Build and PhoneBox install/uninstall
 tests/             Mirrors src/, plus a fake DOM, demo states and install tests
-docs/              Design, implementation plan and threat model (in Spanish)
+docs/              Design, implementation plan and threat model
 ```
 
 Logs: `journalctl --user -u phonebox-discord-widget`. They contain event types and codes only, never names or tokens.

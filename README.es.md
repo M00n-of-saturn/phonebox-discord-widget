@@ -15,7 +15,7 @@
 <p align="center">
   <a href="#inicio-rápido"><b>Inicio rápido</b></a> ·
   <a href="#cómo-funciona"><b>Cómo funciona</b></a> ·
-  <a href="docs/amenazas.md"><b>Matriz de amenazas</b></a>
+  <a href="docs/threat-model.md"><b>Matriz de amenazas</b></a>
 </p>
 
 <p align="center">
@@ -82,12 +82,12 @@ Si el widget muestra "Falta autorizar", vuelve a ejecutar `pnpm run setup` (Ente
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/images/panel-lleno.png" alt="Canal lleno: 12 personas visibles, 15 en voz, silencio activo"><br><b>Canal lleno</b><br><sub>Se muestran 12 personas y el total real arriba; los nombres largos se cortan con puntos suspensivos.</sub></td>
-    <td width="50%"><img src="docs/images/panel-nombre-html.png" alt="Una persona cuyo nombre contiene HTML, mostrado como texto"><br><b>Los nombres no confiables siguen siendo texto</b><br><sub>Un nombre como <code>&lt;img src=x onerror=…&gt;</code> se dibuja literal, nunca como HTML.</sub></td>
+    <td width="50%"><img src="docs/images/panel-full.png" alt="Canal lleno: 12 personas visibles, 15 en voz, silencio activo"><br><b>Canal lleno</b><br><sub>Se muestran 12 personas y el total real arriba; los nombres largos se cortan con puntos suspensivos.</sub></td>
+    <td width="50%"><img src="docs/images/panel-html-name.png" alt="Una persona cuyo nombre contiene HTML, mostrado como texto"><br><b>Los nombres no confiables siguen siendo texto</b><br><sub>Un nombre como <code>&lt;img src=x onerror=…&gt;</code> se dibuja literal, nunca como HTML.</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/images/panel-fuera-de-canal.png" alt="Fuera de un canal, con silenciar y ensordecer disponibles"><br><b>Fuera de un canal</b><br><sub>Silenciar y ensordecer funcionan antes de entrar.</sub></td>
-    <td width="50%"><img src="docs/images/panel-cerrado.png" alt="Discord cerrado, con el botón Abrir Discord"><br><b>Discord cerrado</b><br><sub>Un botón para abrirlo en la PC.</sub></td>
+    <td width="50%"><img src="docs/images/panel-not-in-channel.png" alt="Fuera de un canal, con silenciar y ensordecer disponibles"><br><b>Fuera de un canal</b><br><sub>Silenciar y ensordecer funcionan antes de entrar.</sub></td>
+    <td width="50%"><img src="docs/images/panel-closed.png" alt="Discord cerrado, con el botón Abrir Discord"><br><b>Discord cerrado</b><br><sub>Un botón para abrirlo en la PC.</sub></td>
   </tr>
 </table>
 
@@ -119,7 +119,7 @@ flowchart LR
 | Datos de otras personas | Solo se envía lo que se muestra. Los ids reales de Discord se reemplazan por claves opacas con sal que cambian en cada arranque; sin avatares. |
 | Dependencias | Ninguna en ejecución; tres de desarrollo con lockfile y `pnpm audit`. |
 
-La matriz completa, con la prueba que respalda cada mitigación, está en [`docs/amenazas.md`](docs/amenazas.md).
+La matriz completa, con la prueba que respalda cada mitigación, está en [`docs/threat-model.md`](docs/threat-model.md).
 
 ## Desarrollo
 
@@ -136,7 +136,7 @@ src/
   widget/          Corre en el teléfono: cliente de PhoneBox, componentes y estilos
 scripts/           Build e instalación o desinstalación en PhoneBox
 tests/             Espejo de src/, más un DOM falso, estados de demostración y pruebas de instalación
-docs/              Diseño, plan de implementación y matriz de amenazas
+docs/              Diseño, plan de implementación y matriz de amenazas (en inglés)
 ```
 
 Criterios: una responsabilidad por clase y carpeta; `widget` y `bridge` dependen de `shared` y nunca uno del otro;
