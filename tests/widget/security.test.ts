@@ -32,5 +32,6 @@ test('dist/widget.html es un solo bloque local, sin cierres de script extra y de
   assert.ok(!/https?:\/\//i.test(html), 'el widget no debe cargar nada de internet');
   assert.ok(Buffer.byteLength(html) < 64 * 1024, `pesa ${Buffer.byteLength(html)} bytes`);
   assert.ok(!html.includes('/*CSS*/') && !html.includes('/*JS*/'), 'quedaron marcadores sin reemplazar');
+  assert.equal(html.split('data-lang="en"').length - 1, 1, 'data-lang="en" debe aparecer exactamente una vez');
   for (const word of FORBIDDEN) assert.ok(!html.includes(word), `widget.html contiene ${word}`);
 });
